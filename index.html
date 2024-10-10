@@ -1,0 +1,76 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>CSS3 Perspective Playground</title>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+  <div id="app">
+    <h2>CSS3 Perspective Playground</h2>
+    <main>
+      <section class="settings">
+        <div class="settings-container">
+          <label>perspective: {{ perspective }}px;</label>
+          <input type="range" min="0" max="999" step="10"  v-model.number="perspective" />
+
+          <label>rotateX: {{ rotateX }}deg; </label>
+          <input type="range" min="-180" max="180" step="10" v-model.number="rotateX" />
+
+          <label>rotateY: {{ rotateY }}deg; </label>
+          <input type="range" min="-180" max="180" step="10" v-model.number="rotateY" />
+
+          <label>rotateZ: {{ rotateZ }}deg; </label>
+          <input type="range" min="-180" max="180" step="10" v-model.number="rotateZ" />
+          <div class="buttons-container">
+            <button type="button" @click.prevent="reset" :class="{pressed: resetPressed}">Reset</button>
+            <button type="button" @click.prevent="copy" :class="{pressed: copyPressed}">Copy</button>
+          </div>
+
+        </div>
+      </section>
+      <section class="output">
+        <div class="box-container">
+          <div class="box" :style="box"></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+ <css-doodle> 
+    :doodle {
+    @grid: 1x3 / 100vmax;
+    position: absolute;
+    top: 0; left: 0;
+    z-index: -1;
+    }
+
+    @size: 100% 150%;
+    position: absolute;
+
+    background: @m(100, (
+    linear-gradient(transparent, @p(
+    #FFFDE1@repeat(2, @p([0-9a-f])),
+    #62ba47@repeat(2, @p([0-9a-f]))
+    ))
+    @r(0%, 100%) @r(0%, 100%) /
+    @r(1px) @r(23vmin)
+    no-repeat
+    ));
+
+    will-change: transform;
+    animation: f 50s linear calc(-50s / @size() * @i()) infinite;
+    @keyframes f {
+    from { transform: translateY(-100%) }
+    to { transform: translateY(100%) }
+    }
+  </css-doodle>
+
+  <script src="https://esm.sh/css-doodle/css-doodle.min.js?raw"></script>
+  <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
